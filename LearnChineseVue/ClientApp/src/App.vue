@@ -36,8 +36,7 @@
             this.state.isLogined = false;
             await axios
                 .get("/api/test")
-                .then((response) => {
-                    console.log(response, "resp")
+                .then(() => {
                     this.state.isLogined = true;
                 })
                 .catch(() => {

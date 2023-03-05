@@ -37,16 +37,8 @@
                        placeholder="3 (тоны цифрами по порядку)"
                        v-model="tones"/>   
             </div>
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="inputGroup-sizing-default">Группа&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <input type="text" 
-                       class="form-control" 
-                       aria-label="Sizing example input" 
-                       aria-describedby="inputGroup-sizing-default" 
-                       placeholder="1 (пока группирую слова по группам, что бы потом показывать)"
-                       v-model="group"/>   
-            </div>
           <button className="btn btn-primary" v-on:click="save">Добавить</button>
+          <button className="btn btn-primary" v-on:click="reset">Очистить</button>
         </div>
 </template>
 <script>
@@ -58,25 +50,24 @@
                 hieroglyph: "",
                 translate: "",
                 pinyin: "",
-                tones: "",
-                group: ""
+                tones: ""
             }
         },
         methods: {
             save: function() {
                 axios
-                    .post("/ChineseWords/savechineseword", {
+                    .post("/ChineseWords/AddChineseWordInDictionary", {
                         ChineseWord: this.hieroglyph,
                         Translation: this.translate,
-                        GroupId: this.group,
                         Tones: this.tones,
                         Pinyin: this.pinyin
                     })
                     .then(response => {
-                        this.reset();
                         console.log(response)
                     })
                     .catch(function (error) {
+                        alert(error)
+                        //todo допилить обработку ошибок
                         console.log(error)
                     });
             },
@@ -84,14 +75,10 @@
                 this.hieroglyph = "",
                 this.translate =  "",
                 this.pinyin = "",
-                this.tones = "",
-                this.group = ""
-            }      
-        }
-        
-    }
-
-    
+                this.tones = ""
+            }
+        }        
+    }    
 </script>
 <styles>
 </styles>

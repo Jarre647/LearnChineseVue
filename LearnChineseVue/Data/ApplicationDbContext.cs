@@ -12,5 +12,6 @@ namespace LearnChineseVue.Data
         {
         }
         public DbSet<ChineseWordDbModel> ChineseWords { get; set; }
+        public DbSet<OrderNumChineseWordsByUserDbModel> OrderNumChineseWordsByUser { get; set; }
     }
 }

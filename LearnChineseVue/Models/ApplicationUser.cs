@@ -8,5 +8,6 @@ namespace LearnChineseVue.Models
         [MaxLength(70)]
         [Required]
         public string NickName { get; set; }
+
     }
 }

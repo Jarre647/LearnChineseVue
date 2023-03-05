@@ -26,8 +26,8 @@ namespace LearnChineseVue.Controllers
         [HttpPost("savechineseword")]
         public ActionResult SaveChineseWord([FromBody] SaveChineseWordRequestModel request)
         {
-            request.User = User.Identity.Name;
-            var response = _chineseWordApi.SaveChineseWordAsync(request);
+
+            var response = _chineseWordApi.AddChineseWordInDictionaryAsync(request);
             return Ok();
         }
 
@@ -38,5 +38,16 @@ namespace LearnChineseVue.Controllers
             var resp = await _chineseWordApi.GetAllChineseWordsByUserAsync(request);
             return resp;
         }
+
+        [HttpPost("getWordById")]
+        public async Task<GetChineseWordByIdResponse> GetChineseWordById([FromBody] GetChineseWordByIdRequest request)
+        {
+            request.UserName = User.Identity.Name;
+            var response = await _chineseWordApi.GetChineseWordByIdAsync(request);
+
+            return response;
+        }
+
+        [HttpPost("SaveWord")]
     }
 }

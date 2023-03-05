@@ -2,5 +2,6 @@
 {
     public class SaveChineseWordResponseModel
     {
+        public string? Errors { get; set; }
     }
 }

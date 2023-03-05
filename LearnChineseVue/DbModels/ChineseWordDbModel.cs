@@ -8,6 +8,5 @@
         public int GroupId { get; set; }
         public int Tones { get; set; }
         public string Pinyin { get; set; }
-        public string? User { get; set; }
     }
 }

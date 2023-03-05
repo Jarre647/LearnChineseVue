@@ -33,6 +33,7 @@ namespace LearnChineseVue
                 .AddDefaultTokenProviders();
             builder.Services.AddScoped<IChineseWordApi, ChineseWordApi>();
             builder.Services.AddScoped<IChineseWordsRepository, ChineseWordsRepository>();
+            builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
             var app = builder.Build();
             app.UseStaticFiles();

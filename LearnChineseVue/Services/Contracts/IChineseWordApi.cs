@@ -4,7 +4,8 @@ namespace LearnChineseVue.Services.Contracts
 {
     public interface IChineseWordApi
     {
-        Task<SaveChineseWordResponseModel> SaveChineseWordAsync(SaveChineseWordRequestModel model);
+        Task<SaveChineseWordResponseModel> AddChineseWordInDictionaryAsync(SaveChineseWordRequestModel model);
         Task<GetAllChineseWordsResponse> GetAllChineseWordsByUserAsync(GetAllChineseWordsRequest request);
+        Task<GetChineseWordByIdResponse> GetChineseWordByIdAsync(GetChineseWordByIdRequest request);
     }
 }
