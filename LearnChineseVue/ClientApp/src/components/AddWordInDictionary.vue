@@ -50,7 +50,7 @@
                 hieroglyph: "",
                 translate: "",
                 pinyin: "",
-                tones: ""
+                tones: 0
             }
         },
         methods: {
@@ -59,7 +59,7 @@
                     .post("/ChineseWords/AddChineseWordInDictionary", {
                         ChineseWord: this.hieroglyph,
                         Translation: this.translate,
-                        Tones: this.tones,
+                        Tones: parseInt(this.tones),
                         Pinyin: this.pinyin
                     })
                     .then(response => {
@@ -75,7 +75,7 @@
                 this.hieroglyph = "",
                 this.translate =  "",
                 this.pinyin = "",
-                this.tones = ""
+                this.tones = 0
             }
         }        
     }    

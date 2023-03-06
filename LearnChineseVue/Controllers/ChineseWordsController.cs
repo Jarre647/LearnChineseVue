@@ -23,8 +23,8 @@ namespace LearnChineseVue.Controllers
             return Ok();
         }
 
-        [HttpPost("savechineseword")]
-        public ActionResult SaveChineseWord([FromBody] SaveChineseWordRequestModel request)
+        [HttpPost("AddChineseWordInDictionary")]
+        public ActionResult AddChineseWordInDictionary([FromBody] SaveChineseWordRequestModel request)
         {
 
             var response = _chineseWordApi.AddChineseWordInDictionaryAsync(request);
@@ -48,6 +48,6 @@ namespace LearnChineseVue.Controllers
             return response;
         }
 
-        [HttpPost("SaveWord")]
+     //   [HttpPost("SaveWord")]
     }
 }
