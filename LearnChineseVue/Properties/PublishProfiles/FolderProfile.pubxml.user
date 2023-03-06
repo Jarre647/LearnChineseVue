@@ -4,8 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\jarre\source\repos\LearnChineseVue\LearnChineseVue\bin\Release\net7.0\publish\</_PublishTargetUrl>
-    <History>True|2023-03-01T19:54:30.1914213Z;True|2023-02-28T20:53:36.2078233+03:00;True|2023-02-28T20:49:05.6687847+03:00;True|2023-02-27T23:53:31.9038434+03:00;True|2023-02-26T21:53:03.1020146+03:00;</History>
+    <_PublishTargetUrl>D:\Repos\LearnChineseVue\LearnChineseVue\bin\Release\net7.0\publish\</_PublishTargetUrl>
+    <History>True|2023-03-06T13:14:16.9785322Z;True|2023-03-06T19:36:01.8631797+07:00;False|2023-03-06T19:35:29.8631204+07:00;True|2023-03-02T02:54:30.1914213+07:00;True|2023-03-01T00:53:36.2078233+07:00;True|2023-03-01T00:49:05.6687847+07:00;True|2023-02-28T03:53:31.9038434+07:00;True|2023-02-27T01:53:03.1020146+07:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>
