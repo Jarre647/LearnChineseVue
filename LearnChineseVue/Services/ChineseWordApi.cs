@@ -31,7 +31,7 @@ namespace LearnChineseVue.Services
             };
             try
             {
-                await _chineseWordsRepository.AddChineseWordInDictionaryAsync(model);
+               await _chineseWordsRepository.AddChineseWordInDictionaryAsync(model);
             }
             catch (AlredyExistException ex)
             {

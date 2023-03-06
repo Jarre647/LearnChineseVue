@@ -1,5 +1,4 @@
 ﻿using LearnChineseVue.DbModels;
-using LearnChineseVue.Models;
 using LearnChineseVue.ViewModels;
 
 namespace LearnChineseVue.Repositories.Contracts

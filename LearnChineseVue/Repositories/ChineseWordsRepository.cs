@@ -41,7 +41,7 @@ namespace LearnChineseVue.Repositories
             {
                 throw new AlredyExistException("Это слово уже добавлено в словарь");
             }
-            _context.ChineseWords.Add(model);
+            await _context.ChineseWords.AddAsync(model);
             await _context.SaveChangesAsync();
         }
 

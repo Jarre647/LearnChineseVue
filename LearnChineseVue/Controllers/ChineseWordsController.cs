@@ -24,10 +24,9 @@ namespace LearnChineseVue.Controllers
         }
 
         [HttpPost("AddChineseWordInDictionary")]
-        public ActionResult AddChineseWordInDictionary([FromBody] SaveChineseWordRequestModel request)
+        public async Task<ActionResult> AddChineseWordInDictionary([FromBody] SaveChineseWordRequestModel request)
         {
-
-            var response = _chineseWordApi.AddChineseWordInDictionaryAsync(request);
+            var response = await _chineseWordApi.AddChineseWordInDictionaryAsync(request);
             return Ok();
         }
 
