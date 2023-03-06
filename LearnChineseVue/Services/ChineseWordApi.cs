@@ -25,7 +25,6 @@ namespace LearnChineseVue.Services
             var model = new ChineseWordDbModel()
             {
                 ChineseWord = request.ChineseWord,
-                GroupId = request.GroupId,
                 Pinyin = request.Pinyin,
                 Tones = request.Tones,
                 Translation = request.Translation
