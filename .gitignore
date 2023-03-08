@@ -3,3 +3,4 @@ LearnChineseVue/.config/*
 LearnChineseVue/bin/*
 LearnChineseVue/ClientApp/node_modules/*
 LearnChineseVue/obj/*
+LearnChineseVue/wwwroot/*
