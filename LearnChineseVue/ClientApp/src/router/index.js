@@ -1,13 +1,13 @@
-﻿import { createWebHistory, createRouter } from "vue-router";
-import HomePage from "@/components/HomePage.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+
 import LogIn from "@/components/LogIn.vue";
-import RegisterAccount from "@/components/RegisterAccount.vue";
+import HomePage from '@/components/HomePage.vue'
 import AddWordInDictionary from "@/components/AddWordInDictionary.vue";
-/* eslint-disable */
+import RegisterAccount from "@/components/RegisterAccount.vue"
 const routes = [
     {
-        path: "/",
-        name: "HomePage",
+        path: '/',
+        name: 'home',
         component: HomePage
     },
     {
@@ -16,20 +16,20 @@ const routes = [
         component: LogIn
     },
     {
-        component: "/Register",
-        name: "RegisterAccount",
-        component: RegisterAccount
+        path: '/add-word-in-dictionary',
+        name: 'AddWordInDictionary',
+        component: AddWordInDictionary
     },
     {
-        component: "/AddWordInDictionary",
-        name: "AddWordInDictionary",
-        component: AddWordInDictionary
+        path:'/register',
+        name: 'RegisterAccount',
+        component: RegisterAccount
     }
-];
+]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-});
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
 
-export default router;
+export default router
