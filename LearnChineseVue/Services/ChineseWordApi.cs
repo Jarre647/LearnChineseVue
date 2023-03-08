@@ -78,5 +78,20 @@ namespace LearnChineseVue.Services
             response.ChineseWord.Tones = getWord.Tones;
             return response;
         }
+
+        public async Task<UpdateChineseWordResponse> UpdateChineseWordAsync(UpdateChineseWordRequest request)
+        {
+            var getUser = await _accountRepository.GetAccountByName(request.UserName);
+            request.UserName = getUser.UserId;
+            try
+            {
+                await _chineseWordsRepository.UpdateChineseWordAsync(request);
+            }
+            catch (Exception ex)
+            {
+                return new UpdateChineseWordResponse();
+            }
+            return new UpdateChineseWordResponse();
+        }
     }
 }

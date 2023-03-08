@@ -51,19 +51,19 @@
                        aria-label="Sizing example input" 
                        aria-describedby="inputGroup-sizing-default" 
                        placeholder="1 (пока группирую слова по группам, что бы потом показывать)"
-                       v-model="model.groupId"/>   
+                       v-model="groupId"/>   
             </div>
-          <button className="btn btn-primary" v-on:click="save">Сохранить</button>
-          <button className="btn btn-primary" v-on:click="reset">Отменить</button>
+          <button className="btn btn-primary" v-on:click="save()">Сохранить</button>
+
             </slot>
           </div>
   
           <div class="modal-footer">
             <slot name="footer">
               <button
-                class="modal-default-button"
+                class="modal-default-button btn btn-primary"
                 @click="$emit('close')"
-              >OK</button>
+              >Закрыть</button>
             </slot>
           </div>
         </div>
@@ -85,16 +85,34 @@
     data() {
       return {
         model: {},
-        chlen: 0
+        groupId: 0
       }
     },
-    methods: {
+    methods: {           
+      save: function() {
+        axios
+          .post("/ChineseWords/UpdateChineseWord", {
+            Id: this.model.id,
+            ChineseWord: this.model.chineseWord,
+            Translation: this.model.translation,
+            Tones: this.model.tones,
+            Pinyin: this.model.pinyin,
+            GroupId: this.groupId
+          })
+          .then(response => {
+              console.log(response)
+          })
+          .catch(function (error) {
+              alert(error)
+              //todo допилить обработку ошибок
+              console.log(error)
+          });
+      },
       getZalupa: async function(id)
       {
         await axios
             .post("/ChineseWords/getWordById", { Id: id})
             .then(response => {
-
                 this.model = response.data.chineseWord;
             })
             .catch(function (error) {

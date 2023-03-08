@@ -47,6 +47,12 @@ namespace LearnChineseVue.Controllers
             return response;
         }
 
-     //   [HttpPost("SaveWord")]
+        [HttpPost("UpdateChineseWord")]
+        public async Task<UpdateChineseWordResponse> UpdateChinseWord([FromBody] UpdateChineseWordRequest request)
+        {
+            request.UserName = User.Identity.Name;
+            var response = await _chineseWordApi.UpdateChineseWordAsync(request);
+            return response;
+        }
     }
 }

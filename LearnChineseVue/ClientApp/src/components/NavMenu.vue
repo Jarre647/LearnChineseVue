@@ -14,7 +14,7 @@
                      v-bind:class="{show: isExpanded}">
                     <ul class="navbar-nav flex-grow">
                         <li class="nav-item" v-if="state.isLogined">
-                            <router-link :to="{ name: 'HomePage' }" class="nav-link text-dark">Home</router-link>
+                            <router-link :to="{ name: 'HomePage' }" class="nav-link text-dark">Словарь</router-link>
                         </li>
                         <li class="nav-item" v-if="!state.isLogined">
                             <router-link :to="{ name: 'Login' }" class="nav-link text-dark">LogIn</router-link>

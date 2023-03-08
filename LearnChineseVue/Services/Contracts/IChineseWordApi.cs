@@ -7,5 +7,6 @@ namespace LearnChineseVue.Services.Contracts
         Task<SaveChineseWordResponseModel> AddChineseWordInDictionaryAsync(SaveChineseWordRequestModel model);
         Task<GetAllChineseWordsResponse> GetAllChineseWordsByUserAsync(GetAllChineseWordsRequest request);
         Task<GetChineseWordByIdResponse> GetChineseWordByIdAsync(GetChineseWordByIdRequest request);
+        Task<UpdateChineseWordResponse> UpdateChineseWordAsync(UpdateChineseWordRequest request);
     }
 }

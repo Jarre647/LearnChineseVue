@@ -1,4 +1,5 @@
 ﻿using LearnChineseVue.DbModels;
+using LearnChineseVue.Models;
 using LearnChineseVue.ViewModels;
 
 namespace LearnChineseVue.Repositories.Contracts
@@ -8,5 +9,6 @@ namespace LearnChineseVue.Repositories.Contracts
         Task<List<ChineseWordViewModel>> GetAllChineseWordsByUserAsync(string user);
         Task AddChineseWordInDictionaryAsync(ChineseWordDbModel model);
         Task<ChineseWordViewModel> GetChineseWordByIdAsync(int id, string userId);
+        Task UpdateChineseWordAsync(UpdateChineseWordRequest request);
     }
 }

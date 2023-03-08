@@ -1,6 +1,7 @@
 ﻿using LearnChineseVue.Data;
 using LearnChineseVue.DbModels;
 using LearnChineseVue.Exceptions;
+using LearnChineseVue.Models;
 using LearnChineseVue.Repositories.Contracts;
 using LearnChineseVue.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +71,32 @@ namespace LearnChineseVue.Repositories
             {
                 throw;
             }
+        }
+        
+        public async Task UpdateChineseWordAsync(UpdateChineseWordRequest request)
+        {
+            var getChineseWord = await _context.ChineseWords.FirstAsync(item => item.Id == request.Id);
+            getChineseWord.Pinyin = request.Pinyin;
+            getChineseWord.ChineseWord = request.ChineseWord;
+            getChineseWord.Translation = request.Translation;
+            getChineseWord.Tones = request.Tones;
 
+            var getGroup = await _context.OrderNumChineseWordsByUser.FirstOrDefaultAsync(item=> item.UserId == request.UserName && item.ChineseWordId == request.Id);
+            if(getGroup != null)
+            {
+                getGroup.GroupId = request.GroupId;
+            }
+            else
+            {
+                var group = new OrderNumChineseWordsByUserDbModel
+                {
+                    UserId = request.UserName,
+                    ChineseWordId = request.Id,
+                    GroupId = request.GroupId
+                };
+                await _context.OrderNumChineseWordsByUser.AddAsync(group);
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

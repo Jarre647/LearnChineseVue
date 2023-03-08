@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LearnChineseVue.DbModels
 {
-    [Keyless]
+
     public class OrderNumChineseWordsByUserDbModel
     {
+        [Key]
+        public int Id { get; set; }
         public string UserId { get; set; }
 
         public int ChineseWordId{ get; set; }
