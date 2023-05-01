@@ -10,5 +10,6 @@ namespace LearnChineseVue.Repositories.Contracts
         Task AddChineseWordInDictionaryAsync(ChineseWordDbModel model);
         Task<ChineseWordViewModel> GetChineseWordByIdAsync(int id, string userId);
         Task UpdateChineseWordAsync(UpdateChineseWordRequest request);
+        Task<List<ChineseWordViewModel>> GetChineseWordsByGroupId(int groupId, string userId);
     }
 }

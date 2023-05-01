@@ -31,9 +31,13 @@ namespace LearnChineseVue
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
             builder.Services.AddScoped<IChineseWordApi, ChineseWordApi>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
+
             builder.Services.AddScoped<IChineseWordsRepository, ChineseWordsRepository>();
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddScoped<IOrderNumChineseWordsRepository, OrderNumChineseWordsRepository>();
 
             var app = builder.Build();
             app.UseStaticFiles();
@@ -50,7 +54,9 @@ namespace LearnChineseVue
             UpdateDatabase(app);
 
             app.MapControllers();
-
+            //app.MapControllerRoute(
+            //    name: "default",
+            //pattern: "{controller=CRM}/{action=Index}/{id?}");
             app.Run();
         }
 

@@ -31,7 +31,7 @@ namespace LearnChineseVue.Controllers
         }
 
         [HttpPost("getAllWords")]
-        public async Task<GetAllChineseWordsResponse>  GetAllChineseWords([FromBody] GetAllChineseWordsRequest request)
+        public async Task<GetAllChineseWordsResponse> GetAllChineseWords([FromBody] GetAllChineseWordsRequest request)
         {
             request.UserName = User.Identity.Name;
             var resp = await _chineseWordApi.GetAllChineseWordsByUserAsync(request);
@@ -52,6 +52,23 @@ namespace LearnChineseVue.Controllers
         {
             request.UserName = User.Identity.Name;
             var response = await _chineseWordApi.UpdateChineseWordAsync(request);
+            return response;
+        }
+
+        [HttpPost("GetGroups")]
+        public async Task<GetGroupsResponse> GetGroupsByUser([FromBody] GetGroupsRequest request)
+        {
+            request.UserName = User.Identity.Name;
+            var response = await _chineseWordApi.GetGroupsAsync(request);
+            
+            return response;
+        }
+
+        [HttpPost("getWordsByGroup")]
+        public async Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupId([FromBody] GetChineseWordsByGroupIdRequest request)
+        {
+            request.UserName = User.Identity.Name;
+            var response = await _chineseWordApi.GetChineseWordsByGroupIdAsync(request);
             return response;
         }
     }

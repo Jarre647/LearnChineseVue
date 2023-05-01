@@ -4,6 +4,8 @@ import LogIn from "@/components/LogIn.vue";
 import HomePage from '@/components/HomePage.vue'
 import AddWordInDictionary from "@/components/AddWordInDictionary.vue";
 import RegisterAccount from "@/components/RegisterAccount.vue"
+import LearnWordsMainPage from "@/components/Learn/LearnWordsMainPage.vue"
+import CRMPage from "@/components/CRMPage.vue"
 const routes = [
     {
         path: '/',
@@ -24,6 +26,16 @@ const routes = [
         path:'/register',
         name: 'RegisterAccount',
         component: RegisterAccount
+    },
+    {
+        path: '/learn',
+        name: 'LearnWordsMainPage',
+        component: LearnWordsMainPage
+    },
+    {
+        path: '/crm',
+        name: 'CRMPage',
+        component: CRMPage
     }
 ]
 

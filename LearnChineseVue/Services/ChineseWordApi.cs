@@ -11,12 +11,15 @@ namespace LearnChineseVue.Services
     {
         private readonly IChineseWordsRepository _chineseWordsRepository;
         private readonly IAccountRepository _accountRepository;
+        private readonly IOrderNumChineseWordsRepository _orderNumChineseWordsRepository;
 
         public ChineseWordApi(IChineseWordsRepository chineseWordsRepository,
-                              IAccountRepository accountRepository)
+                              IAccountRepository accountRepository,
+                              IOrderNumChineseWordsRepository orderNumChineseWordsRepository)
         {
             _chineseWordsRepository = chineseWordsRepository;
             _accountRepository = accountRepository;
+            _orderNumChineseWordsRepository = orderNumChineseWordsRepository;
         }
 
         public async Task<SaveChineseWordResponseModel> AddChineseWordInDictionaryAsync(SaveChineseWordRequestModel request)
@@ -31,7 +34,7 @@ namespace LearnChineseVue.Services
             };
             try
             {
-               await _chineseWordsRepository.AddChineseWordInDictionaryAsync(model);
+                await _chineseWordsRepository.AddChineseWordInDictionaryAsync(model);
             }
             catch (AlredyExistException ex)
             {
@@ -58,7 +61,7 @@ namespace LearnChineseVue.Services
                     Pinyin = item.Pinyin,
                     Tones = item.Tones,
                     Translation = item.Translation,
-                    Id = item.Id 
+                    Id = item.Id
                 };
                 response.ChineseWords.Add(model);
             }
@@ -92,6 +95,26 @@ namespace LearnChineseVue.Services
                 return new UpdateChineseWordResponse();
             }
             return new UpdateChineseWordResponse();
+        }
+
+        public async Task<GetGroupsResponse> GetGroupsAsync(GetGroupsRequest request)
+        {
+            var getUser = await _accountRepository.GetAccountByName(request.UserName);
+            var response = new GetGroupsResponse
+            {
+                GroupIds = await _orderNumChineseWordsRepository.GetGroupIds(getUser.UserId)
+            };
+            return response;
+        }
+
+        public async Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupIdAsync(GetChineseWordsByGroupIdRequest request)
+        {
+            var getUser = await _accountRepository.GetAccountByName(request.UserName);
+            var response = new GetChineseWordsByGroupIdResponse
+            {
+                ChineseWords = await _chineseWordsRepository.GetChineseWordsByGroupId(request.GroupId, getUser.UserId)
+            };
+            return response;
         }
     }
 }

@@ -14,6 +14,9 @@
                      v-bind:class="{show: isExpanded}">
                     <ul class="navbar-nav flex-grow">
                         <li class="nav-item" v-if="state.isLogined">
+                            <router-link :to="{name:'LearnWordsMainPage'}" class="nav-link text-dark">Учить слова</router-link>
+                        </li>
+                        <li class="nav-item" v-if="state.isLogined">
                             <router-link :to="{name:'home'}"  class="nav-link text-dark">Словарь</router-link>
                         </li>
                         <li class="nav-item" v-if="!state.isLogined">

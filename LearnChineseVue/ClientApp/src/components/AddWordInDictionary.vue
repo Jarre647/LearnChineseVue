@@ -38,7 +38,6 @@
                        v-model="tones"/>   
             </div>
           <button className="btn btn-primary" v-on:click="save">Добавить</button>
-          <button className="btn btn-primary" v-on:click="reset">Очистить</button>
         </div>
 </template>
 <script>
@@ -50,7 +49,7 @@
                 hieroglyph: "",
                 translate: "",
                 pinyin: "",
-                tones: 0
+                tones:  null
             }
         },
         methods: {
@@ -63,6 +62,7 @@
                         Pinyin: this.pinyin
                     })
                     .then(response => {
+                        this.reset();
                         console.log(response)
                     })
                     .catch(function (error) {

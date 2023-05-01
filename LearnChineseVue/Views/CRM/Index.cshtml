@@ -1,0 +1,27 @@
+﻿@model LearnChineseVue.Models.CRMResponse
+
+@foreach (var item in Model.Accounts)
+{
+    @using (Html.BeginForm("UpdateRole", "Account", FormMethod.Post))
+    {
+        <table>
+            <tr>
+                <td><p>UserName </p></td>
+                <td><p>@item.UserName</p> </td>
+            </tr>
+            <tr>
+                <td><p>Role</p></td>
+                <td>@item.RoleName </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Отправить" /> </td>
+                <td></td>
+            </tr>
+        </table>
+    }
+
+@*    <form method="post" action="/api/account/update-role">
+       
+
+    </form>  *@  
+}

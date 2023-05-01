@@ -8,5 +8,7 @@ namespace LearnChineseVue.Services.Contracts
         Task<GetAllChineseWordsResponse> GetAllChineseWordsByUserAsync(GetAllChineseWordsRequest request);
         Task<GetChineseWordByIdResponse> GetChineseWordByIdAsync(GetChineseWordByIdRequest request);
         Task<UpdateChineseWordResponse> UpdateChineseWordAsync(UpdateChineseWordRequest request);
+        Task<GetGroupsResponse> GetGroupsAsync(GetGroupsRequest request);
+        Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupIdAsync(GetChineseWordsByGroupIdRequest request);
     }
 }

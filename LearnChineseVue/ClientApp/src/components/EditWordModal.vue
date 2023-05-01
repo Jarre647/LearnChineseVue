@@ -72,11 +72,9 @@
   </template>
   
   <script>
-    /* eslint-disable */ 
   import axios from 'axios';
-  /* eslint-disable */ 
   export default {
-    name:"zalupa",
+    name:"EditWord",
     props: {
       show: Boolean,
       message: Object,

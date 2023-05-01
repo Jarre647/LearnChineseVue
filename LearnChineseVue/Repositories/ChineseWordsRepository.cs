@@ -72,7 +72,7 @@ namespace LearnChineseVue.Repositories
                 throw;
             }
         }
-        
+
         public async Task UpdateChineseWordAsync(UpdateChineseWordRequest request)
         {
             var getChineseWord = await _context.ChineseWords.FirstAsync(item => item.Id == request.Id);
@@ -81,8 +81,8 @@ namespace LearnChineseVue.Repositories
             getChineseWord.Translation = request.Translation;
             getChineseWord.Tones = request.Tones;
 
-            var getGroup = await _context.OrderNumChineseWordsByUser.FirstOrDefaultAsync(item=> item.UserId == request.UserName && item.ChineseWordId == request.Id);
-            if(getGroup != null)
+            var getGroup = await _context.OrderNumChineseWordsByUser.FirstOrDefaultAsync(item => item.UserId == request.UserName && item.ChineseWordId == request.Id);
+            if (getGroup != null)
             {
                 getGroup.GroupId = request.GroupId;
             }
@@ -97,6 +97,36 @@ namespace LearnChineseVue.Repositories
                 await _context.OrderNumChineseWordsByUser.AddAsync(group);
             }
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<ChineseWordViewModel>> GetChineseWordsByGroupId(int groupId, string userId)
+        {
+            if (groupId == 0)
+            {
+                var resp = await (from cw in _context.ChineseWords
+                                  select new ChineseWordViewModel
+                                  {
+                                      ChineseWord = cw.ChineseWord,
+                                      Translation = cw.Translation,
+                                      Pinyin = cw.Pinyin,
+                                      Tones = cw.Tones
+                                  }).ToListAsync();
+                return resp;
+            }
+            else
+            {
+                var resp = await (from cw in _context.ChineseWords
+                                  join og in _context.OrderNumChineseWordsByUser on cw.Id equals og.ChineseWordId
+                                  where og.GroupId == groupId && og.UserId == userId
+                                  select new ChineseWordViewModel
+                                  {
+                                      ChineseWord = cw.ChineseWord,
+                                      Translation = cw.Translation,
+                                      Pinyin = cw.Pinyin,
+                                      Tones = cw.Tones
+                                  }).ToListAsync();
+                return resp;
+            }
         }
     }
 }

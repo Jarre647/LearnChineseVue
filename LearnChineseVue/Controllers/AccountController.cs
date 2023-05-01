@@ -51,6 +51,13 @@ namespace LearnChineseVue.Controllers
             return Ok(model);
         }
 
+        [HttpPost("update-role")]
+        public async Task<IActionResult> UpdateRole()
+        {
+            var a = 1;
+            return RedirectToAction("Index","CRM");
+        }
+
         [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody]RegisterViewModel model)

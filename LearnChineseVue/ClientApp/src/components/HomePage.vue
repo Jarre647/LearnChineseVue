@@ -1,40 +1,95 @@
 <template>
     <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Иероглиф</th>
-          <th scope="col">Пиньинь</th>
-          <th scope="col">Тоны</th>
-
-          <th scope="col">Перевод</th>
-          <th scope="col">Группа</th>
-          <th scope="col">Редактировать</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-        <tr v-for="item, index in getChineseWords" :key="item.id">
-          <th scope="row">{{ index }}</th>
-          <td>{{ item.chineseWord }}</td>
-          <td>{{ item.pinyin }}</td>
-          <td>{{ item.tones }}</td>
-          <td>{{ item.translation }}</td>
-          <td>{{ item.groupId }}</td>
-          <td><button @click="showOperatorModal(item.id)" >  Редактировать</button></td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Иероглиф</th>
+                <th scope="col">Пиньинь</th>
+                <th scope="col">Тоны</th>
+                <th scope="col">Перевод</th>
+                <th scope="col">Группа</th>
+                <th scope="col">Редактировать</th>
+            </tr>
+            <tr>
+                <th scope="col">
+                </th>
+                <th scope="col">
+                    <div class="input-group mb-1">
+                        <input type="text"
+                               class="form-control"
+                               aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default"
+                               placeholder="Иероглиф"
+                               v-model="chineseWord" />
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="input-group mb-1">
+                        <input type="text"
+                               class="form-control"
+                               aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default"
+                               placeholder="Пиньинь"
+                               v-model="pinyin" />
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="input-group mb-1">
+                        <input type="text"
+                               class="form-control"
+                               aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default"
+                               placeholder="Тоны"
+                               v-model="tones" />
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="input-group mb-1">
+                        <input type="text"
+                               class="form-control"
+                               aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default"
+                               placeholder="Перевод"
+                               v-model="translation" />
+                    </div>
+                </th>
+                <th scope="col">
+                    <div class="input-group mb-1">
+                        <input type="text"
+                               class="form-control"
+                               aria-label="Sizing example input"
+                               aria-describedby="inputGroup-sizing-default"
+                               placeholder="Группа"
+                               v-model="groupId" />
+                    </div>
+                </th>
+                <th scope="col">
+                  <button @click="clearFilters()">Очистить фильтры</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>          
+            <tr v-for="item, index in getChineseWords()" :key="item.id">
+                <th scope="row">{{ index }}</th>
+                <td>{{ item.chineseWord }}</td>
+                <td>{{ item.pinyin }}</td>
+                <td>{{ item.tones }}</td>
+                <td>{{ item.translation }}</td>
+                <td>{{ item.groupId }}</td>
+                <td><button @click="showOperatorModal(item.id)">  Редактировать</button></td>
+            </tr>
+        </tbody>
     </table>
     <Teleport to="body">
-      <!-- use the modal component, pass in the prop -->
-      <EditWordModal ref="zalupa"
-                     :show="showModal" 
-                      @close="showModal = false"
-                      :message ="message">
-          <template #header>
-              <h3>Редактировать</h3>
-          </template>
-      </EditWordModal>
+        <!-- use the modal component, pass in the prop -->
+        <EditWordModal ref="zalupa"
+                       :show="showModal"
+                       @close="showModal = false"
+                       :message="message">
+            <template #header>
+                <h3>Редактировать</h3>
+            </template>
+        </EditWordModal>
     </Teleport>
 </template>
 
@@ -48,6 +103,11 @@
     name: 'HomePage',
     data() {
       return {
+          chineseWord: "",
+          pinyin: "",
+          tones: "",
+          translation: "",
+          groupId: "",
           chineseWords: [],
           message: {},
           showModal: false
@@ -62,17 +122,30 @@
         {
           this.chlen = val
         }
-      },
-      getChineseWords: {
-        get() {
-          return this.chineseWords
-        },
-        set(val) {
-          this.chineseWords = val
-        }
       }
     },
     methods: {
+      clearFilters: function() {
+          this.chineseWord = "";
+          this.pinyin = "";
+          this.tones = "";
+          this.translation = "";
+          this.groupId = "";
+      },
+      getChineseWords: function() {
+        let data = this.chineseWords;
+        if(this.chineseWord.length > 0)
+          data = data.filter(item=> item.chineseWord == this.chineseWord);
+        if(this.pinyin.length > 0)
+          data = data.filter(item=> item.pinyin == this.pinyin);
+        if(this.tones.length > 0)
+          data = data.filter(item=> item.tones == this.tones);
+        if(this.translation.length > 0)
+          data = data.filter(item=> item.translation == this.translation);
+        if(this.groupId.length > 0)
+          data = data.filter(item=> item.groupId == this.groupId);
+        return data;
+      },
       editValue: async function() {
 
       },
@@ -80,7 +153,7 @@
         await axios
             .post("/ChineseWords/getAllWords", {})
             .then(response => {
-                this.getChineseWords = response.data.chineseWords;
+                this.chineseWords = response.data.chineseWords;
             })
             .catch(function (error) {
                 console.log(error)
@@ -94,13 +167,13 @@
     },
     created() {
       this.getWords();
-    }    
+    }
   }
 </script>
 
 <style scoped>
-    td{
-        padding:5px;
-        border-bottom:solid;
+    td {
+        padding: 5px;
+        border-bottom: solid;
     }
 </style>
