@@ -7,9 +7,9 @@
             </select>
         </div>
         <div>
-            <!-- <button :click="updateUsers()">
+            <button v-on:click="updateUsers()">
                 Save
-            </button> -->
+            </button> 
         </div>
     </div>
     <div v-else>

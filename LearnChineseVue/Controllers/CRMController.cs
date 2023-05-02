@@ -32,9 +32,10 @@ namespace LearnChineseVue.Controllers
         }
 
         [HttpPost("update-users")]
+        //[Authorize(Roles ="admin")]
         public async Task<UpdateUsersResponse> UpdateUsers([FromBody]UpdateUsersRequest request)
         {
-            return new UpdateUsersResponse();
+            return await _accountService.UpdateUsersAsync(request);
         }
     }
 }

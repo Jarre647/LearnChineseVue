@@ -7,5 +7,6 @@ namespace LearnChineseVue.Repositories.Contracts
         Task<AccountViewModel> GetAccountByName(string accountName);
         Task<List<AccountsViewModel>> GetAllAccountsAsync();
         Task<List<RoleViewModel>> GetAllRolesAsync();
+        Task UpdateOrInsertUsersRoleAsync();
     }
 }
