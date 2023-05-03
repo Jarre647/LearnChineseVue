@@ -28,5 +28,10 @@ namespace LearnChineseVue.Services
 
             return response;
         }
+        public async Task<UpdateUsersResponse> UpdateUsersAsync(UpdateUsersRequest request)
+        {
+            await _accountRepository.UpdateOrInsertUsersRoleAsync(request.Users);
+            return new UpdateUsersResponse();
+        }
     }
 }

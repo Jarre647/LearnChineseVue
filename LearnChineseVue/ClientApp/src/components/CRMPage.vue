@@ -15,7 +15,6 @@
     <div v-else>
         <div>недостаточно прав</div>
     </div>
-    <h1>zalupa3</h1>
 </template>
 <script>
     import axios from 'axios';

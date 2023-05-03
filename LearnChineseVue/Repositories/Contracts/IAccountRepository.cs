@@ -1,4 +1,5 @@
-﻿using LearnChineseVue.ViewModels;
+﻿using LearnChineseVue.Models.InsertModels;
+using LearnChineseVue.ViewModels;
 
 namespace LearnChineseVue.Repositories.Contracts
 {
@@ -7,6 +8,6 @@ namespace LearnChineseVue.Repositories.Contracts
         Task<AccountViewModel> GetAccountByName(string accountName);
         Task<List<AccountsViewModel>> GetAllAccountsAsync();
         Task<List<RoleViewModel>> GetAllRolesAsync();
-        Task UpdateOrInsertUsersRoleAsync();
+        Task UpdateOrInsertUsersRoleAsync(List<UpdateUserInsertModel> model);
     }
 }

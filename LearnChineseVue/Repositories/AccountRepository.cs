@@ -1,5 +1,6 @@
 ﻿using LearnChineseVue.Data;
 using LearnChineseVue.Models;
+using LearnChineseVue.Models.InsertModels;
 using LearnChineseVue.Repositories.Contracts;
 using LearnChineseVue.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -52,6 +53,29 @@ namespace LearnChineseVue.Repositories
                 RoleId = item.Id,
                 Name = item.Name
             }).ToListAsync();
+        }
+
+        public async Task UpdateOrInsertUsersRoleAsync(List<UpdateUserInsertModel> model)
+        {
+            var getUsers = model.Select(item => item.UserId).ToList();
+            var getUserRoles = await _context.UserRoles.Where(item => getUsers.Contains(item.UserId)).ToListAsync();
+            _context.UserRoles.RemoveRange(getUserRoles);
+            await _context.SaveChangesAsync();
+            var userRoles = new List<IdentityUserRole<string>>();
+
+            foreach(var userRole in model)
+            {
+                var test = new IdentityUserRole<string>
+                {
+                    RoleId = userRole.RoleId,
+                    UserId = userRole.UserId
+                };
+
+                userRoles.Add(test);
+            }
+
+            await _context.AddRangeAsync(userRoles);
+            await _context.SaveChangesAsync();
         }
     }
 }
