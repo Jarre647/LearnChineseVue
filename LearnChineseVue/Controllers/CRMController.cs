@@ -25,14 +25,14 @@ namespace LearnChineseVue.Controllers
         }
 
         [HttpPost("get-users")]
-        //[Authorize(Roles ="admin")]
+        [Authorize(Roles ="admin")]
         public async Task<CRMResponse> GetAllUsers()
         {
            return await _accountService.GetCRMDataAsync();
         }
 
         [HttpPost("update-users")]
-        //[Authorize(Roles ="admin")]
+        [Authorize(Roles ="admin")]
         public async Task<UpdateUsersResponse> UpdateUsers([FromBody]UpdateUsersRequest request)
         {
             return await _accountService.UpdateUsersAsync(request);
