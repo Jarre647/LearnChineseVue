@@ -161,7 +161,7 @@
       },
       showOperatorModal: async function(data){
          // console.log(data,"data")
-          this.message = await this.getChineseWords.find(item => item.id == data);
+          this.message = this.chineseWords.find(item => item.id == data);
           this.showModal = true;
       }
     },
