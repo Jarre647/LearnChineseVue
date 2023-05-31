@@ -1,13 +1,47 @@
 <template>
     <div class="form-floating" v-show="numberStep == 0">
-        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model="selectedGroupId">
+        <div class="label-block">
+            <label for="floatingSelect">Выберите желаемую группу</label>
+        </div>
+        <div class="group">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model="selectedGroupId">
             <option v-for="groupId, index in groupIds" v-bind:value="groupId" :key="index">{{ groupId }}</option>
-        </select>
-        <label for="floatingSelect">Выберите желаемую группу</label>
-        <button className="btn btn-primary" v-on:click="nextStep">Дальше</button>
+            </select>
+        </div>
+        <div class="button-block">
+            <button className="btn btn-primary" v-on:click="nextStep">Дальше</button>
+        </div>
     </div>
     <div v-if="numberStep == 1">
-        <div>
+        <!-- todo вынести в отдельный компонент для возможности расширения функционала-->
+        <swiper 
+                :pagination="{
+                    clickable: true,
+                }"
+                :navigation="true"
+                :modules="modules"
+                class="mySwiper ">
+
+                <swiper-slide v-for="item, index in chineseWords" :key="index">
+                    <v-lazy>
+                    <div class="swiper-block">
+                        {{ item.chineseWord }}
+                    </div>
+                    <div v-if="showHelpNumber">
+                        <p>
+                            {{ chineseWords[index].translation }}
+                        </p>
+                        <p>
+                            {{ chineseWords[index].pinyin }}
+                        </p>
+                        <p>
+                            {{ chineseWords[index].tones }}
+                        </p>
+                    </div>
+                </v-lazy>
+                </swiper-slide>
+        </swiper>
+        <!-- <div>
             <div>
                 <div v-if="chineseWords.length > 0">
                     <h2>
@@ -31,14 +65,19 @@
                 <button className="btn btn-primary" v-on:click="showHelp()">Показать иероглиф</button>
                 <button className="btn btn-primary" v-on:click="nextWord">Следующее слово</button>
             </div>
-        </div>
+        </div> -->
+        <button className="btn btn-primary word-button" v-on:click="showHelp" v-if="numberStep == 1">Показывать подсказку</button>
+        <button className="btn btn-primary word-button" v-on:click="nextStep" v-if="numberStep == 0">Дальше</button>
+        <button className="btn btn-primary word-button" v-on:click="prevStep" v-if="numberStep == 1">Вернуться</button>
 
-        <button className="btn btn-primary" v-on:click="nextStep">Дальше</button>
-        <button className="btn btn-primary" v-on:click="prevStep">Вернуться</button>
     </div>
 </template>
 <script>
     import axios from 'axios';
+    import { Swiper, SwiperSlide } from 'swiper/vue';
+    import 'swiper/css';
+    import 'swiper/css/pagination';
+    import 'swiper/css/navigation';
     export default {
         name: 'MainLearnPage',
         data() {
@@ -50,6 +89,10 @@
                 showNumberWord: 0,
                 showHelpNumber: false
             }
+        },
+        components: {
+            Swiper,
+            SwiperSlide,
         },
         methods: {
             getGroupIds: function() {
@@ -67,10 +110,10 @@
                         console.log(error)
                     });
             },
-            showHelp: function() {                
-                this.showHelpNumber = true
+            showHelp: function() {
+                this.showHelpNumber = !this.showHelpNumber;
             },
-            nextWord: function() {              
+            nextWord: function() {
                 if(this.showNumberWord < this.chineseWords.length - 1)
                 {
                     this.showNumberWord++;
@@ -125,6 +168,50 @@
         }
     }
 </script>
-<style>
+<style scoped>
+.swiper-test {
+    width: 100%;
+    height: 700px;
+}
+    .word-button {
+        margin: 10px;
+    }
 
+    .swiper-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        font-size: 4em;
+    }
+
+    .label-block {
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        float: left;
+        width: 100%;
+        height: 100px;
+        font-size: 2em;
+    }
+
+    .group {
+        float: left;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        width: 70%;
+        margin: 15px;
+    }
+    .button-block{
+        float: left;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80%;
+        font-size: 20em;
+        margin: 15px;
+    }
 </style>

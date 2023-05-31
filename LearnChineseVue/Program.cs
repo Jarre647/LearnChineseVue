@@ -10,6 +10,7 @@ using LearnChineseVue.Repositories.Contracts;
 using LearnChineseVue.Repositories;
 using LearnChineseVue.Services.Contracts;
 using LearnChineseVue.Services;
+using LearnChineseVue.Extensions;
 
 namespace LearnChineseVue
 {
@@ -28,10 +29,18 @@ namespace LearnChineseVue
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
              options.UseSqlServer(connectionString));
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
+            {
+                opts.Password.RequiredLength = 5;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireDigit = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            //builder.Services.AddTransient<IPasswordValidator<ApplicationUser>,
+            //    CustomPasswordValidator>(serv => new CustomPasswordValidator(6));
             builder.Services.AddScoped<IChineseWordApi, ChineseWordApi>();
             builder.Services.AddScoped<IAccountService, AccountService>();
 

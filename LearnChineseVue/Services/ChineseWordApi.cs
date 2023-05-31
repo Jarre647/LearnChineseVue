@@ -106,13 +106,30 @@ namespace LearnChineseVue.Services
             };
             return response;
         }
+        public async Task<GetGroupsResponse> GetAnonymousGroup(GetGroupsRequest request)
+        {
+            var response = new GetGroupsResponse
+            {
+                GroupIds = new List<int> { 0 }
+            };
+            return response;
+        }
 
         public async Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupIdAsync(GetChineseWordsByGroupIdRequest request)
         {
             var getUser = await _accountRepository.GetAccountByName(request.UserName);
             var response = new GetChineseWordsByGroupIdResponse
             {
-                ChineseWords = await _chineseWordsRepository.GetChineseWordsByGroupId(request.GroupId, getUser.UserId)
+                ChineseWords = await _chineseWordsRepository.GetChineseWordsByGroupIdAsync(request.GroupId, getUser.UserId)
+            };
+            return response;
+        }
+
+        public async Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupIdAnonymousAsync(GetChineseWordsByGroupIdRequest request)
+        {
+            var response = new GetChineseWordsByGroupIdResponse
+            {
+                ChineseWords = await _chineseWordsRepository.GetChineseWordsByGroupIdAnonymousAsync(request.GroupId)
             };
             return response;
         }

@@ -78,6 +78,10 @@ namespace LearnChineseVue.Controllers
                     _logger.LogInformation(3, "User created a new account with password.");
                     return Ok();
                 }
+                else
+                {
+                    throw new Exception("zalupa");
+                }
                 AddErrors(result);
             }
             return Ok(model);

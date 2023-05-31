@@ -37,15 +37,6 @@
                    aria-describedby="inputGroup-sizing-default" 
                    v-model="nickName"  />                
         </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="inputGroup-sizing-default5">Phone number</span>
-            <input type="text" 
-                   class="form-control" 
-                   aria-label="Sizing example input" 
-                   aria-describedby="inputGroup-sizing-default" 
-                   v-model="phoneNumber" />
-        </div>
-
         <button v-on:click="send" className="btn btn-primary">Register</button>
     </div>
 </template>
@@ -70,7 +61,6 @@
                         Password: this.password,
                         ConfirmPassword: this.confirmPassword,
                         NickName: this.nickName,
-                        PhoneNumber: this.phoneNumber
                     })
                     .then(() => {
                         this.$router.push({name: "Login"})

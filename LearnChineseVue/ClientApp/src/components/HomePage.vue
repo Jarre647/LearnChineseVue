@@ -81,6 +81,11 @@
         </tbody>
     </table>
     <Teleport to="body">
+        <ErrorModal :show="showModalError"
+                    @close="closeErrorModal()"
+                    :message="errorMessage">
+
+        </ErrorModal>
         <!-- use the modal component, pass in the prop -->
         <EditWordModal ref="zalupa"
                        :show="showModal"
@@ -96,9 +101,11 @@
 <script>
   import axios from 'axios';
   import EditWordModal from './EditWordModal.vue'
+  import ErrorModal from './Errors/ErrorModal.vue';
   export default {
     components: {
-      EditWordModal
+      EditWordModal,
+      ErrorModal
     },
     name: 'HomePage',
     data() {
@@ -110,7 +117,10 @@
           groupId: "",
           chineseWords: [],
           message: {},
-          showModal: false
+          showModal: false,
+          showModalError: false,
+          errorMessage: "",
+          errored: false
       }
     },
     computed: {
@@ -125,6 +135,14 @@
       }
     },
     methods: {
+      closeErrorModal: function() {
+        this.errorMessage = "";
+        this.showModalError = false;
+      },
+      openErrorModal: function(err) {
+         this.errorMessage = err;
+         this.showModalError = true;
+      },
       clearFilters: function() {
           this.chineseWord = "";
           this.pinyin = "";
@@ -135,15 +153,15 @@
       getChineseWords: function() {
         let data = this.chineseWords;
         if(this.chineseWord.length > 0)
-          data = data.filter(item=> item.chineseWord == this.chineseWord);
+          data = data.filter(item=> item.chineseWord.includes(this.chineseWord));
         if(this.pinyin.length > 0)
-          data = data.filter(item=> item.pinyin == this.pinyin);
+          data = data.filter(item=> item.pinyin.includes(this.pinyin));
         if(this.tones.length > 0)
-          data = data.filter(item=> item.tones == this.tones);
+          data = data.filter(item=> item.tonesincludes(this.tones));
         if(this.translation.length > 0)
-          data = data.filter(item=> item.translation == this.translation);
+          data = data.filter(item=> item.translation.includes(this.translation));
         if(this.groupId.length > 0)
-          data = data.filter(item=> item.groupId == this.groupId);
+          data = data.filter(item=> item.groupId.includes(this.groupId));
         return data;
       },
       editValue: async function() {
@@ -155,8 +173,8 @@
             .then(response => {
                 this.chineseWords = response.data.chineseWords;
             })
-            .catch(function (error) {
-                console.log(error)
+            .catch(error => {
+                this.openErrorModal(error.message)
             });
       },
       showOperatorModal: async function(data){

@@ -99,7 +99,20 @@ namespace LearnChineseVue.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ChineseWordViewModel>> GetChineseWordsByGroupId(int groupId, string userId)
+        public async Task<List<ChineseWordViewModel>> GetChineseWordsByGroupIdAnonymousAsync(int groupId)
+        {
+            var resp = await (from cw in _context.ChineseWords
+                              select new ChineseWordViewModel
+                              {
+                                  ChineseWord = cw.ChineseWord,
+                                  Translation = cw.Translation,
+                                  Pinyin = cw.Pinyin,
+                                  Tones = cw.Tones
+                              }).ToListAsync();
+            return resp;
+        }
+
+        public async Task<List<ChineseWordViewModel>> GetChineseWordsByGroupIdAsync(int groupId, string userId)
         {
             if (groupId == 0)
             {

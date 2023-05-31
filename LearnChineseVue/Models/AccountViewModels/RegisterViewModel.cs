@@ -20,13 +20,12 @@ namespace LearnChineseVue.Models.AccountViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
         [MaxLength(70)]
         [Display(Name = "Nick Name")]
-        public string NickName { get; set; }
+        public string? NickName { get; set; }
 
         [Phone]
         [Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }
