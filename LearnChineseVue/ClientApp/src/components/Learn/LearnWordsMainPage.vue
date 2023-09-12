@@ -1,7 +1,8 @@
 <template>
     <div class="form-floating" v-show="numberStep == 0">
         <div class="label-block">
-            <label for="floatingSelect">Выберите желаемую группу</label>
+            <label for="floatingSelect">Выберите желаемую группу</label>&nbsp; 
+            <!-- <button className="btn btn-primary" v-on:click="continueLearn">Продолжить</button> -->
         </div>
         <div class="group">
             <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model="selectedGroupId">
@@ -18,6 +19,7 @@
                 :pagination="{
                     clickable: true,
                 }"
+                :loop="true"
                 :navigation="true"
                 :modules="modules"
                 class="mySwiper ">
@@ -69,12 +71,13 @@
         <button className="btn btn-primary word-button" v-on:click="showHelp" v-if="numberStep == 1">Показывать подсказку</button>
         <button className="btn btn-primary word-button" v-on:click="nextStep" v-if="numberStep == 0">Дальше</button>
         <button className="btn btn-primary word-button" v-on:click="prevStep" v-if="numberStep == 1">Вернуться</button>
-
+        <!-- <button className="btn btn-primary word-button" v-on:click="continueLearn" v-if="numberStep == 1">Сохранить</button> -->
     </div>
 </template>
 <script>
     import axios from 'axios';
     import { Swiper, SwiperSlide } from 'swiper/vue';
+    import { Navigation } from 'swiper/modules';
     import 'swiper/css';
     import 'swiper/css/pagination';
     import 'swiper/css/navigation';
@@ -93,8 +96,33 @@
         components: {
             Swiper,
             SwiperSlide,
-        },
+        },        
+    setup() {
+      return {
+        modules: [Navigation],
+      };
+    },
         methods: {
+            continueLearn: function() {
+                this.selectedGroupId = this.getCookie("selected-group");
+                this.Swiper.slideTo(3,1, false)
+            
+                
+            },
+            getActiveIndex: function (swiper) {
+                console.log(swiper, "zalupa")
+                return swiper.activeIndex 
+            },
+            getCookie: function (name) {
+                  let matches = document.cookie.match(new RegExp(
+                    //впадлу разбираться
+                    // eslint-disable-next-line 
+                        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                        ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;},
+            save: function() {
+                document.cookie = "zalupa=chlen";
+            },
             getGroupIds: function() {
                 axios
                     .post("/ChineseWords/GetGroups", {
@@ -161,11 +189,13 @@
             }
         },
         computed: {
-
+            mySwiper:()=>{
+          return this.$refs.mySwiper.swiper
+        }
         },
         created() {
             this.getGroupIds()
-        }
+        },
     }
 </script>
 <style scoped>
