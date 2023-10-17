@@ -89,7 +89,7 @@
         <!-- use the modal component, pass in the prop -->
         <EditWordModal ref="zalupa"
                        :show="showModal"
-                       @close="showModal = false"
+                       @close="closeModal"
                        :message="message">
             <template #header>
                 <h3>Редактировать</h3>
@@ -135,6 +135,10 @@
       }
     },
     methods: {
+      closeModal: async function () {
+        this.showModal = false;
+        await this.getWords();
+      },
       closeErrorModal: function() {
         this.errorMessage = "";
         this.showModalError = false;

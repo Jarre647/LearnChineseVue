@@ -108,11 +108,19 @@ namespace LearnChineseVue.Services
         }
         public async Task<GetGroupsResponse> GetAnonymousGroup(GetGroupsRequest request)
         {
-            var response = new GetGroupsResponse
+            try
             {
-                GroupIds = new List<int> { 0 }
-            };
-            return response;
+                var response = new GetGroupsResponse
+                {
+                    GroupIds = new List<int> { 0 }
+                };
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
 
         public async Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupIdAsync(GetChineseWordsByGroupIdRequest request)
@@ -127,6 +135,7 @@ namespace LearnChineseVue.Services
 
         public async Task<GetChineseWordsByGroupIdResponse> GetChineseWordsByGroupIdAnonymousAsync(GetChineseWordsByGroupIdRequest request)
         {
+
             var response = new GetChineseWordsByGroupIdResponse
             {
                 ChineseWords = await _chineseWordsRepository.GetChineseWordsByGroupIdAnonymousAsync(request.GroupId)

@@ -99,6 +99,7 @@
           })
           .then(response => {
               console.log(response)
+              this.$emit('close')
           })
           .catch(function (error) {
               alert(error)

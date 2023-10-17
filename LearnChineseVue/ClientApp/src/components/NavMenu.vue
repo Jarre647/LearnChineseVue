@@ -1,7 +1,9 @@
 <template>
     <header>
+  
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                <a href="http://learnchinese.site"><h1>Official site: learnchinese.site</h1></a>
                 <button class="navbar-toggler"
                         type="button"
                         data-toggle="collapse"
@@ -12,15 +14,17 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
                      v-bind:class="{show: isExpanded}">
+
+
                     <ul class="navbar-nav flex-grow">
                         <li class="nav-item">
                             <router-link :to="{name:'LearnWordsMainPage'}" class="nav-link text-dark">Учить слова</router-link>
                         </li>
                         <li class="nav-item" v-if="state.isLogined">
-                            <router-link :to="{name:'home'}"  class="nav-link text-dark">Словарь</router-link>
+                            <router-link :to="{name:'home'}" class="nav-link text-dark">Словарь</router-link>
                         </li>
                         <li class="nav-item" v-if="!state.isLogined">
-                            <router-link :to="{name:'Login'}"  class="nav-link text-dark">LogIn</router-link>
+                            <router-link :to="{name:'Login'}" class="nav-link text-dark">LogIn</router-link>
                         </li>
                         <li class="nav-item" v-if="!state.isLogined">
                             <router-link :to="{name:'RegisterAccount'}" class="nav-link text-dark">Register</router-link>

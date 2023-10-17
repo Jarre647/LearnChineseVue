@@ -1,12 +1,12 @@
 <template>
     <div class="form-floating" v-show="numberStep == 0">
         <div class="label-block">
-            <label for="floatingSelect">Выберите желаемую группу</label>&nbsp; 
+            <label for="floatingSelect">Выберите желаемую группу</label>&nbsp;
             <!-- <button className="btn btn-primary" v-on:click="continueLearn">Продолжить</button> -->
         </div>
         <div class="group">
             <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model="selectedGroupId">
-            <option v-for="groupId, index in groupIds" v-bind:value="groupId" :key="index">{{ groupId }}</option>
+                <option v-for="groupId, index in groupIds" v-bind:value="groupId" :key="index">{{ groupId }}</option>
             </select>
         </div>
         <div class="button-block">
@@ -15,8 +15,7 @@
     </div>
     <div v-if="numberStep == 1">
         <!-- todo вынести в отдельный компонент для возможности расширения функционала-->
-        <swiper 
-                :pagination="{
+        <swiper :pagination="{
                     clickable: true,
                 }"
                 :loop="true"
@@ -24,24 +23,24 @@
                 :modules="modules"
                 class="mySwiper ">
 
-                <swiper-slide v-for="item, index in chineseWords" :key="index">
-                    <v-lazy>
+            <swiper-slide v-for="item, index in chineseWords" :key="index">
+                <v-lazy>
                     <div class="swiper-block">
-                        {{ item.chineseWord }}
+                        {{ item.translation }}
                     </div>
                     <div v-if="showHelpNumber">
                         <p>
-                            {{ chineseWords[index].translation }}
+                            {{ item.chineseWord }}
                         </p>
                         <p>
-                            {{ chineseWords[index].pinyin }}
+                            {{ item.pinyin }}
                         </p>
                         <p>
-                            {{ chineseWords[index].tones }}
+                            {{ item.tones }}
                         </p>
                     </div>
                 </v-lazy>
-                </swiper-slide>
+            </swiper-slide>
         </swiper>
         <!-- <div>
             <div>
@@ -96,34 +95,33 @@
         components: {
             Swiper,
             SwiperSlide,
-        },        
-    setup() {
-      return {
-        modules: [Navigation],
-      };
-    },
+        },
+        setup() {
+            return {
+                modules: [Navigation],
+            };
+        },
         methods: {
-            continueLearn: function() {
+            continueLearn: function () {
                 this.selectedGroupId = this.getCookie("selected-group");
-                this.Swiper.slideTo(3,1, false)
-            
-                
+                this.Swiper.slideTo(3, 1, false)
             },
             getActiveIndex: function (swiper) {
                 console.log(swiper, "zalupa")
-                return swiper.activeIndex 
+                return swiper.activeIndex
             },
             getCookie: function (name) {
-                  let matches = document.cookie.match(new RegExp(
+                let matches = document.cookie.match(new RegExp(
                     //впадлу разбираться
-                    // eslint-disable-next-line 
-                        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-                        ));
-            return matches ? decodeURIComponent(matches[1]) : undefined;},
-            save: function() {
+                    // eslint-disable-next-line
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            },
+            save: function () {
                 document.cookie = "zalupa=chlen";
             },
-            getGroupIds: function() {
+            getGroupIds: function () {
                 axios
                     .post("/ChineseWords/GetGroups", {
                     })
@@ -138,46 +136,40 @@
                         console.log(error)
                     });
             },
-            showHelp: function() {
+            showHelp: function () {
                 this.showHelpNumber = !this.showHelpNumber;
             },
-            nextWord: function() {
-                if(this.showNumberWord < this.chineseWords.length - 1)
-                {
+            nextWord: function () {
+                if (this.showNumberWord < this.chineseWords.length - 1) {
                     this.showNumberWord++;
                     this.showHelpNumber = false;
                 }
-                else
-                {
+                else {
                     this.showNumberWord = 0;
                 }
             },
-            prevWord:function () {
-                if(this.showNumberWord -1 > 0)
-                {
+            prevWord: function () {
+                if (this.showNumberWord - 1 > 0) {
                     this.showNumberWord--;
                     this.showHelpNumber = false;
                 }
-                else
-                {
+                else {
                     this.showNumberWord = this.chineseWords.length - 1;
                 }
             },
-            nextStep: function() {
+            nextStep: function () {
                 this.numberStep++;
-                if(this.numberStep == 1)
-                {
+                if (this.numberStep == 1) {
                     this.getChineseWords();
                 }
-                if(this.numberStep>1)
-                {
+                if (this.numberStep > 1) {
                     this.numberStep = 0;
                 }
             },
-            prevStep: function() {
+            prevStep: function () {
                 this.numberStep--;
             },
-            getChineseWords: function() {
+            getChineseWords: function () {
                 axios
                     .post("/ChineseWords/getWordsByGroup", {
                         GroupId: this.selectedGroupId
@@ -189,9 +181,9 @@
             }
         },
         computed: {
-            mySwiper:()=>{
-          return this.$refs.mySwiper.swiper
-        }
+            mySwiper: () => {
+                return this.$refs.mySwiper.swiper
+            }
         },
         created() {
             this.getGroupIds()
@@ -199,10 +191,14 @@
     }
 </script>
 <style scoped>
-.swiper-test {
-    width: 100%;
-    height: 700px;
-}
+    p {
+        font-size:large
+    }
+    .swiper-test {
+        width: 100%;
+        height: 700px;
+    }
+
     .word-button {
         margin: 10px;
     }
@@ -235,7 +231,8 @@
         width: 70%;
         margin: 15px;
     }
-    .button-block{
+
+    .button-block {
         float: left;
         display: flex;
         align-items: center;
