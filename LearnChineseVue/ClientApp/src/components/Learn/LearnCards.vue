@@ -18,23 +18,26 @@
         <v-lazy>
             <div class="cards-container">
                 <div>
-                    <label>
+                    <label v-if="!isAll">
                         {{ getShowingChineseWords[0].translation }}
                     </label>
+                    <label v-else>
+                        закончились слова
+                    </label>
                 </div>
-                <div class="card-item" @click="checkIsCorrect(getCurrentPage[0])" :class="getCurrentPage[0].class">
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[0])" :class="getCurrentPage[0].class" v-if="!isAll">
                     {{getCurrentPage[0].word}}
                 </div>
-                <div class="card-item" @click="checkIsCorrect(getCurrentPage[1])" :class="getCurrentPage[1].class">
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[1])" :class="getCurrentPage[1].class" v-if="!isAll">
                     {{getCurrentPage[1].word}}
                 </div>
-                <div class="card-item" @click="checkIsCorrect(getCurrentPage[2])" :class="getCurrentPage[2].class">
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[2])" :class="getCurrentPage[2].class" v-if="!isAll">
                     {{getCurrentPage[2].word}}
                 </div>
-                <div class="card-item" @click="checkIsCorrect(getCurrentPage[3])" :class="getCurrentPage[3].class">
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[3])" :class="getCurrentPage[3].class" v-if="!isAll">
                     {{getCurrentPage[3].word}}
                 </div>
-            </div>
+            </div>            
             <div v-if="showLastSelected">
                 <label>
                     {{lastSelected.chineseWord}}
@@ -79,7 +82,8 @@
                 chineseWordsToShow: [],
                 currentPage: [],
                 lastSelected: null,
-                showLastSelected: false
+                showLastSelected: false,
+                isAll: false
             }
         },
         created() {
@@ -107,9 +111,10 @@
             reset: function() {
                 this.setShowingChineseWords();
                 this.setCurrentPage();
+                this.isAll = false;
             },
             setShowingChineseWords: function(){
-                this.getShowingChineseWords = this.chineseWords;
+                this.getShowingChineseWords =  Object.assign([], this.chineseWords);
                 this.getShowingChineseWords.forEach(element => {
                     element["number"] = this.randomIntFromInterval(1, 10000);
                 });
@@ -126,7 +131,7 @@
                         this.getShowingChineseWords.splice(0,1);
                         this.setCurrentPage();
                     }
-                     ,2000);
+                     ,1000);
                     
                 }
                 else{
@@ -137,6 +142,11 @@
                 return Math.floor(Math.random() * (max - min + 1) + min)
             },
             setCurrentPage: function() {
+                if(this.getShowingChineseWords.length == 0) {
+                    this.isAll = true;
+                    this.showLastSelected = false;
+                    return;
+                }
                 this.currentPage = [];
                 this.currentPage.push( {
                     word: this.getShowingChineseWords[0].chineseWord,
@@ -145,9 +155,17 @@
                     class: ""
                 });
                 for(let i = 1; i < 4; i++) {
-                    
+                    let randomNumber = this.randomIntFromInterval(0, this.chineseWords.length - 1);
+                    while(true) {
+                        if(this.currentPage.find(item => item.word == this.chineseWords[randomNumber].chineseWord) != null) {
+                            randomNumber = this.randomIntFromInterval(0, this.chineseWords.length - 1);
+                        }
+                        else {
+                            break;
+                        }
+                    };
                     this.currentPage.push({
-                        word: this.chineseWords[this.randomIntFromInterval(0, this.chineseWords.length - 1)].chineseWord,
+                        word: this.chineseWords[randomNumber].chineseWord,
                         isCorrect: false,
                         orderNumber: this.randomIntFromInterval(1, 1000),
                         class: ""
