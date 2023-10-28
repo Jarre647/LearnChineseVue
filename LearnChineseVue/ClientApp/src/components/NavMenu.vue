@@ -3,7 +3,6 @@
   
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a href="http://learnchinese.site"><h1>Official site: learnchinese.site</h1></a>
                 <button class="navbar-toggler"
                         type="button"
                         data-toggle="collapse"

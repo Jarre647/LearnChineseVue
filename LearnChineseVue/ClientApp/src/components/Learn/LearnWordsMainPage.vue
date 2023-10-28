@@ -142,7 +142,7 @@
             nextWord: function () {
                 if (this.showNumberWord < this.chineseWords.length - 1) {
                     this.showNumberWord++;
-                    this.showHelpNumber = false;
+                    //this.showHelpNumber = false;
                 }
                 else {
                     this.showNumberWord = 0;

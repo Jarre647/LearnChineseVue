@@ -38,7 +38,7 @@ namespace LearnChineseVue.Repositories
 
         public async Task AddChineseWordInDictionaryAsync(ChineseWordDbModel model)
         {
-            if (_context.ChineseWords.Any(item => item.ChineseWord == model.ChineseWord))
+            if (_context.ChineseWords.Any(item => item.ChineseWord == model.ChineseWord && item.Pinyin == model.Pinyin))
             {
                 throw new AlredyExistException("Это слово уже добавлено в словарь");
             }

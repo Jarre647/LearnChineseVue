@@ -36,8 +36,8 @@
         name: "LogIn",
         data() {
             return {
-                email: "",
-                password: "",
+                email: "ak647@mail.ru",
+                password: "omgwcEMIY1!",
                 rememberMe: false
             }
         },

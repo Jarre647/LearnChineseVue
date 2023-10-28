@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5002"
+      "applicationUrl": "http://192.168.1.105:80"
     },
     "https": {
       "commandName": "Project",
@@ -29,6 +29,15 @@
     },
     "Профиль 1": {
       "commandName": "Project"
+    },
+    "mob": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://172.20.10.6:80"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",
