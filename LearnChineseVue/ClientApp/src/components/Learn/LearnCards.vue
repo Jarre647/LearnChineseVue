@@ -17,25 +17,44 @@
         <!-- todo вынести в отдельный компонент для возможности расширения функционала-->
         <v-lazy>
             <div class="cards-container">
-            <div>
+                <div>
+                    <label>
+                        {{ getShowingChineseWords[0].translation }}
+                    </label>
+                </div>
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[0])" :class="getCurrentPage[0].class">
+                    {{getCurrentPage[0].word}}
+                </div>
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[1])" :class="getCurrentPage[1].class">
+                    {{getCurrentPage[1].word}}
+                </div>
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[2])" :class="getCurrentPage[2].class">
+                    {{getCurrentPage[2].word}}
+                </div>
+                <div class="card-item" @click="checkIsCorrect(getCurrentPage[3])" :class="getCurrentPage[3].class">
+                    {{getCurrentPage[3].word}}
+                </div>
+            </div>
+            <div v-if="showLastSelected">
                 <label>
-                    {{ getShowingChineseWords[0].translation }}
+                    {{lastSelected.chineseWord}}
+                </label>
+                <br />
+                <label>
+                    {{lastSelected.translation}}
+                </label>
+                <br />
+                <label>
+                    {{lastSelected.pinyin}}
+
+                </label>
+                <br />
+                <label>
+                    {{lastSelected.tones}}
                 </label>
             </div>
-            <div class="card-item" @click="checkIsCorrect(getCurrentPage[0])" :class="getCurrentPage[0].class">
-                {{getCurrentPage[0].word}}
-            </div>
-            <div class="card-item" @click="checkIsCorrect(getCurrentPage[1])" :class="getCurrentPage[1].class">
-                {{getCurrentPage[1].word}}             
-            </div>
-            <div class="card-item" @click="checkIsCorrect(getCurrentPage[2])" :class="getCurrentPage[2].class">
-                {{getCurrentPage[2].word}}         
-            </div>
-            <div class="card-item" @click="checkIsCorrect(getCurrentPage[3])" :class="getCurrentPage[3].class">
-                {{getCurrentPage[3].word}}
-            </div>
-        </div>
         </v-lazy>
+        
         <button className="btn btn-primary word-button" v-on:click="nextStep" v-if="numberStep == 0">Дальше</button>
 
 
@@ -58,7 +77,9 @@
                 showNumberWord: 0,
                 showHelpNumber: false,
                 chineseWordsToShow: [],
-                currentPage: []
+                currentPage: [],
+                lastSelected: null,
+                showLastSelected: false
             }
         },
         created() {
@@ -96,14 +117,16 @@
                     return a.number - b.number
                 })
             },
-            checkIsCorrect(checkedItem) {               
+            checkIsCorrect(checkedItem) {
+                this.lastSelected = this.chineseWords.find(item => item.chineseWord == checkedItem.word);
+                this.showLastSelected = true;
                 if(checkedItem.isCorrect) {
                     checkedItem.class = "green"
                     setTimeout(() => {
                         this.getShowingChineseWords.splice(0,1);
                         this.setCurrentPage();
                     }
-                     ,5000);
+                     ,2000);
                     
                 }
                 else{
@@ -179,15 +202,15 @@
 }
     .cards-container{
         width: 100%;
-        height: 400px;
-
+        height: 80%;
+        float: left;
     }
     label{
         font-size: 200%
     }
     .card-item {
         width: 45%;
-        height: 200px;
+        height: 45%;
         background-color: rgb(184, 184, 184);
         float:left;
         color: black;
