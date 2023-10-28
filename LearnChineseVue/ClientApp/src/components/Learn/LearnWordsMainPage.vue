@@ -42,35 +42,9 @@
                 </v-lazy>
             </swiper-slide>
         </swiper>
-        <!-- <div>
-            <div>
-                <div v-if="chineseWords.length > 0">
-                    <h2>
-                        {{ chineseWords[showNumberWord].translation }}
-                    </h2>
-                    <div v-if="showHelpNumber">
-                        <p>
-                            {{ chineseWords[showNumberWord].chineseWord }}
-                        </p>
-                        <p>
-                            {{ chineseWords[showNumberWord].pinyin }}
-                        </p>
-                        <p>
-                            {{ chineseWords[showNumberWord].tones }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <button className="btn btn-primary" v-on:click="prevWord">Предыдущее слово</button>
-                <button className="btn btn-primary" v-on:click="showHelp()">Показать иероглиф</button>
-                <button className="btn btn-primary" v-on:click="nextWord">Следующее слово</button>
-            </div>
-        </div> -->
         <button className="btn btn-primary word-button" v-on:click="showHelp" v-if="numberStep == 1">Показывать подсказку</button>
         <button className="btn btn-primary word-button" v-on:click="nextStep" v-if="numberStep == 0">Дальше</button>
         <button className="btn btn-primary word-button" v-on:click="prevStep" v-if="numberStep == 1">Вернуться</button>
-        <!-- <button className="btn btn-primary word-button" v-on:click="continueLearn" v-if="numberStep == 1">Сохранить</button> -->
     </div>
 </template>
 <script>

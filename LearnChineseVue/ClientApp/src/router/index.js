@@ -6,6 +6,8 @@ import AddWordInDictionary from "@/components/AddWordInDictionary.vue";
 import RegisterAccount from "@/components/RegisterAccount.vue"
 import LearnWordsMainPage from "@/components/Learn/LearnWordsMainPage.vue"
 import CRMPage from "@/components/CRMPage.vue"
+import LearnCards from '@/components/Learn/LearnCards.vue'
+
 const routes = [
     {
         path: '/',
@@ -36,6 +38,11 @@ const routes = [
         path: '/crm',
         name: 'CRMPage',
         component: CRMPage
+    },
+    {
+        path: '/cards',
+        name: 'LearnCards',
+        component: LearnCards
     }
 ]
 

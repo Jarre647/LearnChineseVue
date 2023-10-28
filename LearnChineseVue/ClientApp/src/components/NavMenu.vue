@@ -1,6 +1,5 @@
 <template>
     <header>
-  
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <button class="navbar-toggler"
@@ -13,9 +12,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
                      v-bind:class="{show: isExpanded}">
-
-
                     <ul class="navbar-nav flex-grow">
+                        <li class="nav-item">
+                            <router-link :to="{name:'LearnCards'}" class="nav-link text-dark">Карточка</router-link>
+                        </li>
                         <li class="nav-item">
                             <router-link :to="{name:'LearnWordsMainPage'}" class="nav-link text-dark">Учить слова</router-link>
                         </li>
