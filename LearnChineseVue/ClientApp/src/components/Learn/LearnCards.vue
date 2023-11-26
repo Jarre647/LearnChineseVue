@@ -156,14 +156,9 @@
                 });
                 for(let i = 1; i < 4; i++) {
                     let randomNumber = this.randomIntFromInterval(0, this.chineseWords.length - 1);
-                    while(true) {
-                        if(this.currentPage.find(item => item.word == this.chineseWords[randomNumber].chineseWord) != null) {
-                            randomNumber = this.randomIntFromInterval(0, this.chineseWords.length - 1);
-                        }
-                        else {
-                            break;
-                        }
-                    };
+                    while(this.currentPage.find(item => item.word == this.chineseWords[randomNumber].chineseWord) != null) {
+                        randomNumber = this.randomIntFromInterval(0, this.chineseWords.length - 1);
+                    }
                     this.currentPage.push({
                         word: this.chineseWords[randomNumber].chineseWord,
                         isCorrect: false,

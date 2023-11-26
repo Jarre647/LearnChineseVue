@@ -161,11 +161,12 @@
         if(this.pinyin.length > 0)
           data = data.filter(item=> item.pinyin.includes(this.pinyin));
         if(this.tones.length > 0)
-          data = data.filter(item=> item.tonesincludes(this.tones));
-        if(this.translation.length > 0)
+          data = data.filter(item=> item.tones.toString().includes(this.tones));
+        if(this.translation.length > 0){
           data = data.filter(item=> item.translation.includes(this.translation));
+        }
         if(this.groupId.length > 0)
-          data = data.filter(item=> item.groupId.includes(this.groupId));
+          data = data.filter(item=> item.groupId.toString().includes(this.groupId));
         return data;
       },
       editValue: async function() {
