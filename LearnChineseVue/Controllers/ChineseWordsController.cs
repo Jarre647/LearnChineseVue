@@ -2,6 +2,7 @@
 using LearnChineseVue.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace LearnChineseVue.Controllers
 {
@@ -33,10 +34,16 @@ namespace LearnChineseVue.Controllers
         [HttpPost("getAllWords")]
         public async Task<GetAllChineseWordsResponse> GetAllChineseWords([FromBody] GetAllChineseWordsRequest request)
         {
-            request.UserName = User.Identity.Name;
+            request.UserName ??= User.Identity.Name;
             var resp = await _chineseWordApi.GetAllChineseWordsByUserAsync(request);
             return resp;
         }
+
+        [HttpGet("check")]
+        public ActionResult Check()
+        {
+            return Ok("zalupa");
+        }        
 
         [HttpPost("getWordById")]
         public async Task<GetChineseWordByIdResponse> GetChineseWordById([FromBody] GetChineseWordByIdRequest request)
@@ -59,7 +66,7 @@ namespace LearnChineseVue.Controllers
         [AllowAnonymous]
         public async Task<GetGroupsResponse> GetGroupsByUser([FromBody] GetGroupsRequest request)
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 request.UserName = User.Identity.Name;
                 var response = await _chineseWordApi.GetGroupsAsync(request);
