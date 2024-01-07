@@ -12,6 +12,7 @@
         <div class="button-block">
             <button className="btn btn-primary" v-on:click="nextStep">Дальше</button>
         </div>
+        
     </div>
     <div v-if="numberStep == 1">
         <!-- todo вынести в отдельный компонент для возможности расширения функционала-->
@@ -37,7 +38,7 @@
                 <div class="card-item" @click="checkIsCorrect(getCurrentPage[3])" :class="getCurrentPage[3].class" v-if="!isAll">
                     {{getCurrentPage[3].word}}
                 </div>
-            </div>            
+            </div>
             <div v-if="showLastSelected">
                 <label>
                     {{lastSelected.chineseWord}}
@@ -57,14 +58,16 @@
                 </label>
             </div>
         </v-lazy>
-        
+
         <button className="btn btn-primary word-button" v-on:click="nextStep" v-if="numberStep == 0">Дальше</button>
 
 
         <button className="btn btn-primary word-button bn" v-on:click="prevStep" v-if="numberStep == 1">Вернуться</button>
         <button className="btn btn-primary word-button bn" v-on:click="reset" v-if="numberStep == 1">Сбросить</button>
+        <label v-if="numberStep == 1">
+            {{getShowingChineseWords.length}}
+        </label>
 
-        
     </div>
 </template>
 <script>
